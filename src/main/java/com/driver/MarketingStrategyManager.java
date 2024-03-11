@@ -12,11 +12,11 @@ public class MarketingStrategyManager {
     }
 
     public void createStrategy(MarketingStrategy strategy) {
-    	//your code goes here
+        strategies.add(strategy);
+        System.out.println("Strategy Added Successfully.");
     }
 
     public MarketingStrategy getStrategyByName(String name) {
-    	//your code goes here
         return strategies.stream()
                 .filter(strategy -> strategy.getName().equals(name))
                 .findFirst()
@@ -24,23 +24,35 @@ public class MarketingStrategyManager {
     }
 
     public void updateStrategy(MarketingStrategy updatedStrategy) {
-    	//your code goes here
+        MarketingStrategy existingStrategy = getStrategyByName(updatedStrategy.getName());
+        if (existingStrategy != null) {
+            existingStrategy.setDescription(updatedStrategy.getDescription());
+            existingStrategy.setTargetAudience(updatedStrategy.getTargetAudience());
+            existingStrategy.setBudget(updatedStrategy.getBudget());
+            existingStrategy.setPotentialROI(updatedStrategy.getPotentialROI());
+            System.out.println("Strategy Updated Successfully.");
+        } else {
+            System.out.println("Strategy not found.");
+        }
     }
 
     public void deleteStrategy(String name) {
-    	//your code goes here
+        MarketingStrategy strategy = getStrategyByName(name);
+        if (strategy != null) {
+            strategies.remove(strategy);
+            System.out.println("Strategy Deleted Successfully.");
+        } else {
+            System.out.println("Strategy not found.");
+        }
     }
 
     public List<MarketingStrategy> getStrategiesInBudgetRange(double minBudget, double maxBudget) {
-    	//your code goes here
         return strategies.stream()
                 .filter(strategy -> strategy.getBudget() >= minBudget && strategy.getBudget() <= maxBudget)
                 .collect(Collectors.toList());
     }
 
     public List<MarketingStrategy> getAllStrategies() {
-    	//your code goes here
         return new ArrayList<>(strategies);
     }
 }
-
